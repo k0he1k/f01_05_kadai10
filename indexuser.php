@@ -18,7 +18,7 @@ $get_kanri = $get['kanri_ﬂg'];
 
 if ($get["kanri_ﬂg"] == 1) {
   $view_kanri .= '<a class="navbar-brand" href="selectuser.php">user_list</a>';
-  $view_kanri .= '<a class="navbar-brand" href="indexuser.php">user_add</a>';
+  // $view_kanri .= '<a class="navbar-brand" href="indexuser.php">user_add</a>';
 };
 ?>
 
@@ -36,7 +36,10 @@ if ($get["kanri_ﬂg"] == 1) {
 <header>
   <nav class="navbar navbar-default">
     <div class="container-fluid">
-    <div class="navbar-header"><a class="navbar-brand" href="select.php">book_list</a><?= $view_kanri ?></div>
+    <div class="navbar-header">
+    <a class="navbar-brand" href="index.php">book_mark</a>
+    <a class="navbar-brand" href="select.php">book_list</a><?= $view_kanri ?>
+    <a class="navbar-brand" href="logout.php" ><font color="#A9A9A9">log_out</font></a></div>
     </div>
   </nav>
 </header>
@@ -44,19 +47,18 @@ if ($get["kanri_ﬂg"] == 1) {
 
 <!-- Main[Start] -->
 <!-- <p><div align=center><?= $_SESSION['name'] ?>'s mark</div></p> -->
-<form method="post" action="insert.php" enctype="multipart/form-data">
+<form method="post" action="insertuser.php">
   <div class="jumbotron">
    <fieldset>
-    <legend>marking</legend>
-     <label>title：<input type="text" name="bookname"></label><br> 
-     <label>URL：<input type="text" name="bookurl"></label><br>
-     <label>rank：<div class="ran"><input type="range" name="rank" min="1" max="5" value=3 step="1"
-  oninput="document.getElementById('output1').value=this.value"/><output id="output1">3</output>
-</div></label>
-     <label>comment:<textArea name="comment" rows="4" cols="40"></textArea></label><br>
-     <label><input type="file" name="upfile" accept="image/*" capture="camera"></label><br>
-     <input type="submit" value="save"><br>
-
+    <legend>user_add</legend>
+    <label>NAME：<input type="text" name="name"></label><br>  
+     <label>ID：<input type="text" name="lid"></label><br> 
+     <label>PW：<input type="text" name="lpw"></label><br>
+     <label>kanri_flag：<div class="ran"><input type="radio" name="kanri_ﬂg" value="1" >管理
+                                         <input type="radio" name="kanri_ﬂg" value="0" checked="checked">ユーザー</div></label>
+     <label>life_flag：<div class="ran"><input type="radio" name="life_ﬂg" value="0" checked="checked" >入会
+                                        <input type="radio" name="life_ﬂg" value="1" >退会</div></label>
+    <input type="submit" value="save"><br>
      <!-- <div><a href ="http://localhost/08_05_katokohei_ex/select3.php">mark_list</a></div> -->
     </fieldset>
   </div>

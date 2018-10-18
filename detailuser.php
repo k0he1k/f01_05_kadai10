@@ -5,7 +5,7 @@ logincheck();
 
 // getで送信されたidを取得
 $id = $_GET['id'];
-// echo "GET:" . $id;
+echo "GET:" . $id;
 
 
 //1.  DB接続します
@@ -14,7 +14,7 @@ $pdo = db_conn();
 
 
 //２．データ登録SQL作成，指定したidのみ表示する
-$stmt = $pdo->prepare('SELECT * FROM gs_bm_table WHERE id = :id');
+$stmt = $pdo->prepare('SELECT * FROM gs_user_table WHERE id = :id');
 $stmt->bindValue(':id', $id, PDO::PARAM_INT);
 $status = $stmt->execute();
 
@@ -29,6 +29,15 @@ if ($status == false) {
   // $rsは配列で返ってくる．$rs["id"], $rs["name"]などで値をとれる
   // var_dump()で見てみよう
 }
+
+// $error_msg = '';
+// $check = isset($_POST['kanri_flg']) ? $_POST['kanri_flg'] : '';
+// if ($check === "") {
+//   $error_msg .= "選択されていません<br />";
+// }
+// print $error_msg;
+?>
+
 ?>
 
 <!-- htmlは「index.php」とほぼ同じです -->
@@ -46,25 +55,24 @@ if ($status == false) {
 <header>
   <nav class="navbar navbar-default">
     <div class="container-fluid">
-    <div class="navbar-header"><a class="navbar-brand" href="select.php">mark_list</a></div>
+    <div class="navbar-header"><a class="navbar-brand" href="selectuser.php">user_list</a></div>
   </nav>
 </header>
 <!-- Head[End] -->
 
 <!-- Main[Start] -->
-<p><div align=center><?= $_SESSION['name'] ?>'s mark</div></p>
-<form method="post" action="update.php">
+<p><div align=center>user mark</div></p>
+<form method="post" action="updateuser.php">
   <div class="jumbotron">
    <fieldset>
     <legend>update</legend>
-     <label>title：<input type="text" name="bookname" value="<?= $rs["bookname"] ?>"></label><br> 
-     <label>URL：<input type="text" name="bookurl" value="<?= $rs["bookurl"] ?>"></label><br>
-     <label>rank：<div class="ran"><input type="range" name="rank" min="1" max="5" value="<?= $rs["rank"] ?>" step="1"
-  oninput="document.getElementById('output1').value=this.value"/><output id="output1"><?= $rs["rank"] ?></output>
-</div></label>
-     <label>comment:<textArea name="comment" rows="4" cols="40"><?= $rs["comment"] ?></textArea></label><br>
-     <label><input type="file" name="upfile" accept="image/*" capture="camera"></label><br>
-     <img src="<?= $rs["image"] ?>"><br>
+     <label>name：<input type="text" name="name" value="<?= $rs["name"] ?>"></label><br> 
+     <label>loginid：<input type="text" name="lid" value="<?= $rs["lid"] ?>"></label><br>
+     <label>loginPW：<input type="text" name="lpw" value="<?= $rs["lpw"] ?>"></label><br>
+     <label>kanri_flag：<div class="ran"><input type="radio" name="kanri_ﬂg" value="1" >管理
+                                        <input type="radio" name="kanri_ﬂg" value="0">ユーザー</div></label>
+     <label>life_flag：<div class="ran"><input type="radio" name="life_ﬂg" value="0" checked="checked" >入会
+                                        <input type="radio" name="life_ﬂg" value="1" >退会</div></label>
      <input type="submit" value="save"><br>
      <!-- idは変えたくない = ユーザーから見えないようにする-->
      <input type="hidden" name="id" value="<?= $rs["id"] ?>">

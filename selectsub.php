@@ -1,10 +1,10 @@
 <?php
 session_start();
-include('function.php');
-logincheck();
+// include('function.php');
+// logincheck();
 
 //1.  DB接続します
-// include('function.php');
+include('function.php');
 $pdo = db_conn();
 
 //２．データ登録SQL作成
@@ -19,30 +19,13 @@ if ($status == false) {
   //Selectデータの数だけ自動でループしてくれる
   while ($result = $stmt->fetch(PDO::FETCH_ASSOC)) {
     $view .= '<p>';
-    $view .= '<a href="detail.php?id=' . $result['id'] . '">';  //更新ページへのaタグを作成
+    $view .= '<a href="detailsub.php?id=' . $result['id'] . '">';  //更新ページへのaタグを作成
     $view .= $result['bookname'] . '[' . $result['indate'] . ']';
     $view .= '</a>';
-    $view .= '　';
-    $view .= '<a href="delete.php?id=' . $result['id'] . '">';  //削除用aタグを作成
-    $view .= '［削除］';
-    $view .= '</a>';
     $view .= '</p>';
-    $view .= '<img src="' . $result['image'] . '" height="200px">';
+    $view .= $result['image'];
   }
 }
-$view_kanri = '';
-$sqll = "SELECT*FROM gs_user_table WHERE name = :a1";
-$stmt_user = $pdo->prepare($sqll);
-$stmt_user->bindValue(':a1', $_SESSION['name'], PDO::PARAM_STR);
-$status = $stmt_user->execute();
-$get = $stmt_user->fetch();
-$get_kanri = $get['kanri_ﬂg'];
-// echo ($get_kanri);
-
-if ($get["kanri_ﬂg"] == 1) {
-  $view_kanri .= '<a class="navbar-brand" href="selectuser.php">user_list</a>';
-  $view_kanri .= '<a class="navbar-brand" href="indexuser.php">user_add</a>';
-};
 ?>
 
 
@@ -63,16 +46,14 @@ if ($get["kanri_ﬂg"] == 1) {
   <nav class="navbar navbar-default">
     <div class="container-fluid">
       <div class="navbar-header">
-      <a class="navbar-brand" href="index.php">book_mark</a>
-      <?= $view_kanri ?>
-      <a class="navbar-brand" href="logout.php" ><font color="#A9A9A9">log_out</font></a>
+      <a class="navbar-brand" href="login.php">login</a>
+      <!-- <a class="navbar-brand" href="logout.php" ><font color="#A9A9A9">log_out</font></a> -->
     </div>
   </nav>
 </header>
 <!-- Head[End] -->
 
 <!-- Main[Start] -->
-<p><div align=center><?= $_SESSION['name'] ?>'s list</div></p>
 <div>
     <div class="container jumbotron"><?= $view ?></div>
   </div>

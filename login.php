@@ -14,6 +14,7 @@
     <div class="container-fluid">
     <div class="navbar-header">
     <a class="navbar-brand" href="newlogin.php">new_login</a>
+    <a class="navbar-brand" href="selectsub.php">list</a>
     </div>
     </div>
   </nav>

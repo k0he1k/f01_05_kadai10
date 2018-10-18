@@ -7,6 +7,7 @@ if (!isset($_POST["lid"]) || $_POST["lid"] == "" ||
   exit('ParamError');
 }
 
+
 //1. POSTデータ取得
 $lid = $_POST["lid"];
 $lpw = $_POST["lpw"];
@@ -15,6 +16,15 @@ $name = $_POST["name"];
 //2. DB接続します
 include("function.php");
 $pdo = db_conn();
+
+$stmt = $pdo->query("SELECT * FROM gs_user_table");
+while ($item = $stmt->fetch()) {
+  if ($item['name'] == $name) {
+    exit('この名前はすでに登録されてます');
+  } else {
+    $name = $name;
+  }
+}
 
 //３．データ登録SQL作成※VALUES設定時「:」は先に設置する必要あり
 $sql = "INSERT INTO gs_user_table(lid,lpw,name)VALUES(:a1,:a2,:a3)";

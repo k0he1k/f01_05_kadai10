@@ -39,9 +39,12 @@ if ($val["id"] != "") {
   $_SESSION["life_flg"] = $val['life_flg'];
   $_SESSION["name"] = $val['name'];
   header("location: select.php");
+  // if ($_SESSION["kanri_flg"] = 1) {
+  //   header("locatipn: selectuser.php");
+// }
 } else {
   // alert("Unregistered");
-  header("location: newlogin.php");
+  exit('そのID・PWではログインできません');
 }
 
 //処理終了

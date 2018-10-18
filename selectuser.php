@@ -8,7 +8,7 @@ logincheck();
 $pdo = db_conn();
 
 //２．データ登録SQL作成
-$stmt = $pdo->prepare("SELECT*FROM gs_bm_table");
+$stmt = $pdo->prepare("SELECT*FROM gs_user_table");
 $status = $stmt->execute();
 
 //３．データ表示
@@ -19,17 +19,17 @@ if ($status == false) {
   //Selectデータの数だけ自動でループしてくれる
   while ($result = $stmt->fetch(PDO::FETCH_ASSOC)) {
     $view .= '<p>';
-    $view .= '<a href="detail.php?id=' . $result['id'] . '">';  //更新ページへのaタグを作成
-    $view .= $result['bookname'] . '[' . $result['indate'] . ']';
+    $view .= '<a href="detailuser.php?id=' . $result['id'] . '">';  //更新ページへのaタグを作成
+    $view .= $result['name'];
     $view .= '</a>';
     $view .= '　';
     $view .= '<a href="delete.php?id=' . $result['id'] . '">';  //削除用aタグを作成
     $view .= '［削除］';
     $view .= '</a>';
     $view .= '</p>';
-    $view .= '<img src="' . $result['image'] . '" height="200px">';
   }
 }
+
 $view_kanri = '';
 $sqll = "SELECT*FROM gs_user_table WHERE name = :a1";
 $stmt_user = $pdo->prepare($sqll);
@@ -40,7 +40,6 @@ $get_kanri = $get['kanri_ﬂg'];
 // echo ($get_kanri);
 
 if ($get["kanri_ﬂg"] == 1) {
-  $view_kanri .= '<a class="navbar-brand" href="selectuser.php">user_list</a>';
   $view_kanri .= '<a class="navbar-brand" href="indexuser.php">user_add</a>';
 };
 ?>
@@ -64,6 +63,7 @@ if ($get["kanri_ﬂg"] == 1) {
     <div class="container-fluid">
       <div class="navbar-header">
       <a class="navbar-brand" href="index.php">book_mark</a>
+      <a class="navbar-brand" href="select.php">book_list</a>
       <?= $view_kanri ?>
       <a class="navbar-brand" href="logout.php" ><font color="#A9A9A9">log_out</font></a>
     </div>
@@ -72,7 +72,7 @@ if ($get["kanri_ﬂg"] == 1) {
 <!-- Head[End] -->
 
 <!-- Main[Start] -->
-<p><div align=center><?= $_SESSION['name'] ?>'s list</div></p>
+<p><div align=center>user list</div></p>
 <div>
     <div class="container jumbotron"><?= $view ?></div>
   </div>
